@@ -1,0 +1,23 @@
+@use '../../styles/vars';
+
+.btn {
+  width: 100%;
+  height: 48px;
+  padding: 16px 23px;
+  border: 1px solid vars.$gray;
+  border-radius: 6px;
+  line-height: 15px;
+  background-color: transparent;
+	&_zero {
+		grid-column: span 2;
+	}
+	&_equal {
+		background-color: vars.$iris;
+		color: vars.$white;
+	}
+
+  // &:hover {
+  //   border-color: vars.$iris;
+  //   box-shadow: inset 0 0 0 1px vars.$iris;
+  // }
+}
