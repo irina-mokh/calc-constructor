@@ -4,6 +4,8 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { App } from './components/App';
 import './styles/index.scss';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 const root = createRoot(
   // eslint-disable-next-line prettier/prettier
@@ -14,7 +16,9 @@ const root = createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
     </Provider>
   </React.StrictMode>
 );

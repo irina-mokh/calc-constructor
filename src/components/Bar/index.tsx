@@ -1,29 +1,78 @@
 import { Btn } from '../Btn';
-const OPERATORS = ['/', 'x', '-', '+'];
-const NUMS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'];
+import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
+import { useRef, MutableRefObject, useEffect } from 'react';
+import { Display } from '../Display';
 
-type BarProps = {
-  type?: string,
-  children?: JSX.Element,
+type DataType = {
+  [key: string]: Array<string>,
 };
-export const Bar = ({ type, children }: BarProps) => {
-  let buttons;
-  if (type) {
-    const data = type === 'nums' ? NUMS : OPERATORS;
-    buttons = data.map((val) => <Btn>{val}</Btn>);
+const DATA: DataType = {
+  nums: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'],
+  operators: ['/', 'x', '-', '+'],
+};
+
+export type BarProps = {
+  name: string,
+  order?: number,
+};
+export const Bar = (props: BarProps) => {
+  const { name }  = props;
+  let children: JSX.Element | JSX.Element[] = [];
+  switch (name) { 
+    case 'display':
+      children = <Display />;
+      break;
+    case 'equal':
+      children = <Btn>=</Btn>;
+      break;
+    default:
+      children = DATA[name].map((val) => <Btn key={val}>{val}</Btn>);
+      break;
   }
 
-  const classes = () => {
-    const arr = [];
-    switch (type) {
-      case 'nums':
-        arr.push('bar_nums');
-        break;
-      case 'operators':
-        arr.push('bar_operators');
-        break;
-    }
-    return arr.join(' ');
-  };
-  return <ul className={'bar ' + classes()}>{type ? buttons : children}</ul>;
+
+  // eslint-disable-next-line prettier/prettier
+  const ref = useRef() as MutableRefObject<HTMLUListElement>;
+
+  const [{ isOver }, drop] = useDrop(
+    () => ({
+      accept: 'bar',
+      drop: async (drag: BarProps) => {
+        console.log(drag);
+      },
+      collect: (monitor: DropTargetMonitor) => ({
+        isOver: !!monitor.isOver(),
+        canDrop: !!monitor.canDrop(),
+      }),
+    }),
+    [props]
+  );
+
+  // drag bar
+  const [{ isDragging }, drag] = useDrag(
+    () => ({
+      type: 'bar',
+      item: props,
+      collect: (monitor: DragSourceMonitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }),
+    []
+  );
+
+  
+
+  // task Ref
+  drag(drop(ref));
+
+  return (
+    <ul
+      ref={ref}
+      className={
+        'bar ' + `bar_${name} ` + (isOver ? 'bar_over' : '') + (isDragging ? 'bar_dragging' : '')
+      }
+    >
+      {children}
+    </ul>
+  );
 };

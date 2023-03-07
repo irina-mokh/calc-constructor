@@ -1,16 +1,12 @@
-import { Display } from '../Display';
 import { Bar } from '../Bar';
-import { Btn } from '../Btn';
 
 export const Constructor = () => {
   return (
     <section className="constructor">
-      <Display />
-      <Bar type="operators" />
-      <Bar type="nums" />
-      <Bar>
-        <Btn>=</Btn>
-      </Bar>
+      <Bar name="display" />
+      <Bar name="operators" />
+      <Bar name="nums" />
+      <Bar name="equal" />
     </section>
   );
 };
