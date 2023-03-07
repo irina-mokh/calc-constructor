@@ -35,8 +35,11 @@ export const mainSlice = createSlice({
 
       state.calc = [...calc];
     },
+    setRuntime: (state, { payload }) => {
+      state.runtime = payload;
+    },
   },
 });
-export const { pushBar, removeBar, moveBar } = mainSlice.actions;
+export const { pushBar, removeBar, moveBar, setRuntime } = mainSlice.actions;
 
 export default mainSlice.reducer;

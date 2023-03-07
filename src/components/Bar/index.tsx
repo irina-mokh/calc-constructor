@@ -1,12 +1,11 @@
 import { Btn } from '../Btn';
 import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
-import { useRef, MutableRefObject, useEffect } from 'react';
+import { useRef, MutableRefObject } from 'react';
 import { Display } from '../Display';
 import { useSelector, useDispatch } from 'react-redux';
 import { BarNames, IState } from '../../types';
 import { AppDispatch } from '../../store/store';
 import { moveBar, removeBar } from '../../store/mainSlice';
-import { BADQUERY } from 'dns';
 
 type DataType = {
   [key: string]: Array<string>,
@@ -18,13 +17,14 @@ const DATA: DataType = {
 
 export type BarProps = {
   name: BarNames,
-  order?: number | null,
+  order?: number,
 };
 export const Bar = (bar: BarProps) => {
   const { calc, runtime } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
-  const { name, order }  = bar;
-  const isInCalc = calc.includes(name);
+  const { name }  = bar;
+  const inConstructor = !Object.keys(bar).includes('order');
+  const calcHas = calc.includes(name);
   let children: JSX.Element | JSX.Element[] = [];
   switch (name) { 
     case 'display':
@@ -75,17 +75,17 @@ export const Bar = (bar: BarProps) => {
   drag(drop(ref));
 
   const handleDoubleClick = () => {
-    if (!!order) dispatch(removeBar(name));
+    if (!inConstructor) dispatch(removeBar(name));
   };
   return (
     <>
       {isOver && <span className='position-preview'></span>}
       <ul
         ref={ref}
-        draggable={ !runtime && !!order || !isInCalc}
+        draggable={ !(runtime || (inConstructor && calcHas))}
         onDoubleClick={handleDoubleClick}
         className={
-          'bar ' + `bar_${name} ` + (isDragging ? 'bar_dragging ' : '')
+          'bar ' + `bar_${name} ` + (isDragging ? 'bar_dragging ' : '') + ( !runtime && inConstructor && calcHas ? 'bar_disabled' : "" )
         }
       >
         {children}

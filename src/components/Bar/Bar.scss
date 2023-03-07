@@ -22,21 +22,12 @@
 		opacity: 0.7;
 	}
 
-	&[draggable='false']{
+	&_disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
-	// .calc &_over::after{
-	// 	content: '';
-
-	// 	width: 100%;
-	// 	background-color: vars.$iris;
-	// }
-
-	
-
-	.calc_active & {
+	.calc_runtime & {
 		cursor: auto;
 	}
 }
