@@ -2,14 +2,14 @@
 @use '../../styles/mixins';
 
 .bar {
+	gap: 8px;
+  width: 100%;
+	display: flex;
 	margin-bottom: 12px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   background-color: vars.$white;
   padding: 4px;
-	gap: 8px;
-  width: 100%;
-	display: flex;
 	opacity: 1;
 	cursor: move;
 	
@@ -27,11 +27,41 @@
 		cursor: not-allowed;
 	}
 
-	.calc &_over {
-		border-top: 3px solid vars.$iris;
-	}
+	// .calc &_over::after{
+	// 	content: '';
+
+	// 	width: 100%;
+	// 	background-color: vars.$iris;
+	// }
+
+	
 
 	.calc_active & {
 		cursor: auto;
+	}
+}
+
+.position-preview {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 1px;
+	top: -5px;
+	background-color: vars.$iris;
+	&::before, &::after {
+		position: absolute;
+		content: '';
+		display: block;
+		background-color: vars.$iris;
+		width: 4px;
+		height: 4px;
+		top: -2px;
+		transform: rotate(45deg);
+	}
+	&::before {
+		left: 0;
+	}
+	&::after {
+		right: 0;
 	}
 }

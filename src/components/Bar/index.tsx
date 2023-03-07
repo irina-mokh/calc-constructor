@@ -67,15 +67,18 @@ export const Bar = (props: BarProps) => {
   drag(drop(ref));
 
   return (
-    <ul
-      ref={ref}
-      draggable={ !!order || !calc.includes(name)}
-      onDoubleClick={() => {dispatch(removeBar(name))}}
-      className={
-        'bar ' + `bar_${name} ` + (isOver ? 'bar_over' : '') + (isDragging ? 'bar_dragging ' : '')
-      }
-    >
-      {children}
-    </ul>
+    <>
+      <ul
+        ref={ref}
+        draggable={ !!order || !calc.includes(name)}
+        onDoubleClick={() => {dispatch(removeBar(name))}}
+        className={
+          'bar ' + `bar_${name} ` + (isDragging ? 'bar_dragging ' : '')
+        }
+      >
+        {children}
+      </ul>
+      {isOver && <span className='position-preview'></span>}
+    </>
   );
 };
