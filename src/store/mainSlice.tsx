@@ -17,13 +17,26 @@ export const mainSlice = createSlice({
   initialState,
   reducers: {
     pushBar: (state, { payload }) => {
+      if (state.calc.includes(payload)) {
+        state.calc = state.calc.filter((calcBar) => calcBar !== payload);
+      }
       state.calc = [...state.calc, payload];
     },
     removeBar: (state, { payload }) => {
       state.calc = state.calc.filter((barName) => barName !== payload);
     },
+    moveBar: (state, { payload }) => {
+      const { from, to } = payload;
+      const calc = state.calc;
+      if (from.order) {
+        calc.splice(from.order, 1);
+      }
+      calc.splice(to.order, 0, from.name);
+
+      state.calc = [...calc];
+    },
   },
 });
-export const { pushBar, removeBar } = mainSlice.actions;
+export const { pushBar, removeBar, moveBar } = mainSlice.actions;
 
 export default mainSlice.reducer;

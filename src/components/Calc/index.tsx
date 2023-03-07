@@ -32,7 +32,11 @@ export const Calc = () => {
   return (
     <section
       ref={drop}
-      className={'calc ' + (calc.length === 0 ? 'calc_empty ' : '') + (isOver ? 'calc_hover' : '')}
+      className={
+        'calc ' +
+        (calc.length === 0 ? 'calc_empty ' : '') +
+        (isOver && calc.length === 0 ? 'calc_hover' : '')
+      }
     >
       {calc.length === 0 ? (
         <>
@@ -40,7 +44,10 @@ export const Calc = () => {
           <p className="text">любой элемент из левой панели</p>
         </>
       ) : (
-        <ul>{bars}</ul>
+        <ul>
+          {bars}
+          {isOver && calc.length > 0 && <span className="position-preview"></span>}
+        </ul>
       )}
     </section>
   );

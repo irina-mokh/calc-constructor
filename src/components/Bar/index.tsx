@@ -5,7 +5,8 @@ import { Display } from '../Display';
 import { useSelector, useDispatch } from 'react-redux';
 import { BarNames, IState } from '../../types';
 import { AppDispatch } from '../../store/store';
-import { removeBar } from '../../store/mainSlice';
+import { moveBar, removeBar } from '../../store/mainSlice';
+import { BADQUERY } from 'dns';
 
 type DataType = {
   [key: string]: Array<string>,
@@ -19,10 +20,10 @@ export type BarProps = {
   name: BarNames,
   order?: number | null,
 };
-export const Bar = (props: BarProps) => {
+export const Bar = (bar: BarProps) => {
   const { calc } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
-  const { name, order }  = props;
+  const { name, order }  = bar;
   let children: JSX.Element | JSX.Element[] = [];
   switch (name) { 
     case 'display':
@@ -43,19 +44,25 @@ export const Bar = (props: BarProps) => {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: 'bar',
+      drop: async (drag: BarProps, monitor) => {
+        if (monitor.didDrop()) {
+          return;
+        }
+        dispatch(moveBar({ from: drag, to: bar}));
+      },
       collect: (monitor: DropTargetMonitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
       }),
     }),
-    [props]
+    [bar]
   );
 
   // drag bar
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: 'bar',
-      item: props,
+      item: bar,
       collect: (monitor: DragSourceMonitor) => ({
         isDragging: monitor.isDragging(),
       }),
@@ -68,6 +75,7 @@ export const Bar = (props: BarProps) => {
 
   return (
     <>
+      {isOver && <span className='position-preview'></span>}
       <ul
         ref={ref}
         draggable={ !!order || !calc.includes(name)}
@@ -78,7 +86,6 @@ export const Bar = (props: BarProps) => {
       >
         {children}
       </ul>
-      {isOver && <span className='position-preview'></span>}
     </>
   );
 };
