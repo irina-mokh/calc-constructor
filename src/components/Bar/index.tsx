@@ -21,9 +21,10 @@ export type BarProps = {
   order?: number | null,
 };
 export const Bar = (bar: BarProps) => {
-  const { calc } = useSelector((state: IState) => state.main);
+  const { calc, runtime } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
   const { name, order }  = bar;
+  const isInCalc = calc.includes(name);
   let children: JSX.Element | JSX.Element[] = [];
   switch (name) { 
     case 'display':
@@ -73,13 +74,16 @@ export const Bar = (bar: BarProps) => {
   // task Ref
   drag(drop(ref));
 
+  const handleDoubleClick = () => {
+    if (!!order) dispatch(removeBar(name));
+  };
   return (
     <>
       {isOver && <span className='position-preview'></span>}
       <ul
         ref={ref}
-        draggable={ !!order || !calc.includes(name)}
-        onDoubleClick={() => {dispatch(removeBar(name))}}
+        draggable={ !runtime && !!order || !isInCalc}
+        onDoubleClick={handleDoubleClick}
         className={
           'bar ' + `bar_${name} ` + (isDragging ? 'bar_dragging ' : '')
         }
