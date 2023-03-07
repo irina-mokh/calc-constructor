@@ -3,17 +3,21 @@
 .btn {
   width: 100%;
   height: 48px;
-  padding: 16px 23px;
+  display: flex;
+	justify-content: center;
+	align-items: center;
   border: 1px solid vars.$gray;
   border-radius: 6px;
   line-height: 15px;
   background-color: transparent;
+	font-size: 14px;
 	&_zero {
 		grid-column: span 2;
 	}
 	&_equal {
 		background-color: vars.$iris;
 		color: vars.$white;
+		height: 64px;
 	}
 
   // &:hover {

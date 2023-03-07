@@ -1,5 +1,12 @@
-
+.main {
+  padding: 5em;
+  // &__heading {
+  //   text-align: center;
+  //   margin: 20px 0;
+  // }
+}
 .app  {
+  height: 480px;
   display: flex;
-  
+  justify-content: space-between;
 }
