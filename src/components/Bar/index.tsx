@@ -2,6 +2,10 @@ import { Btn } from '../Btn';
 import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
 import { useRef, MutableRefObject, useEffect } from 'react';
 import { Display } from '../Display';
+import { useSelector, useDispatch } from 'react-redux';
+import { BarNames, IState } from '../../types';
+import { AppDispatch } from '../../store/store';
+import { removeBar } from '../../store/mainSlice';
 
 type DataType = {
   [key: string]: Array<string>,
@@ -12,11 +16,13 @@ const DATA: DataType = {
 };
 
 export type BarProps = {
-  name: string,
-  order?: number,
+  name: BarNames,
+  order?: number | null,
 };
 export const Bar = (props: BarProps) => {
-  const { name }  = props;
+  const { calc } = useSelector((state: IState) => state.main);
+  const dispatch: AppDispatch = useDispatch();
+  const { name, order }  = props;
   let children: JSX.Element | JSX.Element[] = [];
   switch (name) { 
     case 'display':
@@ -37,9 +43,6 @@ export const Bar = (props: BarProps) => {
   const [{ isOver }, drop] = useDrop(
     () => ({
       accept: 'bar',
-      drop: async (drag: BarProps) => {
-        console.log(drag);
-      },
       collect: (monitor: DropTargetMonitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
@@ -60,16 +63,16 @@ export const Bar = (props: BarProps) => {
     []
   );
 
-  
-
   // task Ref
   drag(drop(ref));
 
   return (
     <ul
       ref={ref}
+      draggable={ !!order || !calc.includes(name)}
+      onDoubleClick={() => {dispatch(removeBar(name))}}
       className={
-        'bar ' + `bar_${name} ` + (isOver ? 'bar_over' : '') + (isDragging ? 'bar_dragging' : '')
+        'bar ' + `bar_${name} ` + (isOver ? 'bar_over' : '') + (isDragging ? 'bar_dragging ' : '')
       }
     >
       {children}

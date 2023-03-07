@@ -5,17 +5,18 @@ export interface IBar {
 }
 
 export type IState = {
-	main: IMainState
+  main: IMainState,
 };
 
-type BarNames = 'display' | 'operators' | 'nums' | 'equal';
+export type BarNames = 'display' | 'operators' | 'nums' | 'equal';
 
+// type ConstructorType = {
+// 	// eslint-disable-next-line prettier/prettier
+// 	[key in BarNames]: boolean;
+// };
 export interface IMainState {
   runtime: boolean;
-  constructor: {
-    // eslint-disable-next-line prettier/prettier
-    [key in BarNames]: boolean;
-  };
+  // constructor: ConstructorType;
   calc: Array<BarNames>;
   values: {
     prev: number,

@@ -5,12 +5,6 @@ export const INITIAL_STORE = {};
 const initialState: IMainState = {
   calc: [],
   runtime: false,
-  constructor: {
-    display: true,
-    operators: true,
-    nums: true,
-    equal: true,
-  },
   values: {
     prev: 0,
     current: 0,
@@ -25,8 +19,11 @@ export const mainSlice = createSlice({
     pushBar: (state, { payload }) => {
       state.calc = [...state.calc, payload];
     },
+    removeBar: (state, { payload }) => {
+      state.calc = state.calc.filter((barName) => barName !== payload);
+    },
   },
 });
-export const { pushBar } = mainSlice.actions;
+export const { pushBar, removeBar } = mainSlice.actions;
 
 export default mainSlice.reducer;

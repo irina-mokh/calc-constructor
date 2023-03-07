@@ -11,6 +11,8 @@
   line-height: 15px;
   background-color: transparent;
 	font-size: 14px;
+	cursor: move;
+
 	&_zero {
 		grid-column: span 2;
 	}
@@ -19,10 +21,14 @@
 		color: vars.$white;
 		height: 64px;
 	}
-	.constructor &{
-		// cursor: move;
+
+	.constructor .bar[draggable="false"] &{
+		cursor: not-allowed;
 	}
 	.calc_active {
+		& {
+			cursor: auto;
+		}
 		&:hover {
 			box-shadow: 0 0 10px vars.$gray;
 		}

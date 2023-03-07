@@ -11,7 +11,7 @@ export const Calc = () => {
 
   const bars = calc.map((barName, i) => (
     <li key={i + barName} className="calc__li">
-      <Bar name={barName}></Bar>
+      <Bar name={barName} order={i}></Bar>
     </li>
   ));
   // Drop bar
@@ -22,6 +22,7 @@ export const Calc = () => {
         return;
       }
       dispatch(pushBar(drag.name));
+      // dispatch(toggleBar(drag.name));
     },
     collect: (monitor: DropTargetMonitor) => ({
       isOver: !!monitor.isOver({ shallow: true }),

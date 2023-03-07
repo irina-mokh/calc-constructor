@@ -10,7 +10,9 @@
 	gap: 8px;
   width: 100%;
 	display: flex;
+	opacity: 1;
 	cursor: move;
+	
 	&_nums {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -20,7 +22,16 @@
 		opacity: 0.7;
 	}
 
+	&[draggable='false']{
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
 	.calc &_over {
-		sborder-top: 3px solid vars.$iris;
+		border-top: 3px solid vars.$iris;
+	}
+
+	.calc_active & {
+		cursor: auto;
 	}
 }
