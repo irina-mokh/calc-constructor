@@ -1,11 +1,21 @@
+import { enterNum, enterOperator, getResult } from '../../store/mainSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { BarNames, IState } from '../../types';
+
 type BtnProps = {
   children: string,
+  type?: BarNames,
 };
 
-export const Btn = ({ children }: BtnProps) => {
+export const Btn = ({ children, type }: BtnProps) => {
+  const { runtime } = useSelector((state: IState) => state.main);
+  const dispatch: AppDispatch = useDispatch();
+  const value = children;
+  const operation = value === 'x' ? '*' : value;
   const classes = () => {
     const arr = [];
-    switch (children) {
+    switch (value) {
       case '0':
         arr.push('btn_zero');
         break;
@@ -15,5 +25,25 @@ export const Btn = ({ children }: BtnProps) => {
     }
     return arr.join(' ');
   };
-  return <button className={'btn ' + classes()}>{children}</button>;
+  const handleClick = () => {
+    if (runtime) {
+      switch (type) {
+        case 'nums':
+          dispatch(enterNum(value));
+          break;
+        case 'operators':
+          dispatch(enterOperator(operation));
+          break;
+        case 'equal':
+          dispatch(getResult());
+          break;
+      }
+    }
+  };
+
+  return (
+    <button className={'btn ' + classes()} onClick={handleClick}>
+      {value}
+    </button>
+  );
 };

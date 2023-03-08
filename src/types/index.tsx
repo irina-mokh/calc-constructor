@@ -14,8 +14,9 @@ export interface IMainState {
   runtime: boolean;
   calc: Array<BarNames>;
   values: {
-    prev: number,
-    current: number,
+    prev: number | null,
+    current: number | null,
     op: string,
+    prevType: string,
   };
 }

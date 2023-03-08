@@ -25,10 +25,9 @@
 	.constructor .bar[draggable="false"] &{
 		cursor: not-allowed;
 	}
-	.calc_active {
-		& {
-			cursor: auto;
-		}
+
+	.calc_runtime & {
+		cursor: auto;
 		&:hover {
 			box-shadow: 0 0 10px vars.$gray;
 		}
@@ -36,6 +35,6 @@
 			border-color: vars.$iris;
 			box-shadow: inset 0 0 0 1px vars.$iris;
 		}
-
 	}
 }
+

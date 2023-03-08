@@ -6,9 +6,10 @@ const initialState: IMainState = {
   calc: [],
   runtime: false,
   values: {
-    prev: 0,
-    current: 0,
+    prev: null,
+    current: null,
     op: '',
+    prevType: '',
   },
 };
 
@@ -38,8 +39,46 @@ export const mainSlice = createSlice({
     setRuntime: (state, { payload }) => {
       state.runtime = payload;
     },
+    enterNum: ({ values }, { payload }) => {
+      const { current, prevType } = values;
+      let start = current !== null && current !== Infinity ? current : '';
+      if (prevType === 'operator') {
+        start = '';
+      }
+      values.prevType = 'num';
+      values.current = start + payload;
+    },
+    enterOperator: ({ values }, { payload }) => {
+      const { current, prev, op, prevType } = values;
+      values.op = payload;
+      values.prev = values.current;
+      if (prevType === 'num' && prev) {
+        values.prev = eval(prev + op + current);
+      }
+      values.prevType = 'operator';
+    },
+    getResult: ({ values }) => {
+      const { current, prev, op } = values;
+      values.current = eval(prev + op + current);
+      values.prev = null;
+      values.op = '';
+    },
+    resetValues: ({ values }) => {
+      values.prev = null;
+      values.op = '';
+      values.current = null;
+    },
   },
 });
-export const { pushBar, removeBar, moveBar, setRuntime } = mainSlice.actions;
+export const {
+  pushBar,
+  removeBar,
+  moveBar,
+  setRuntime,
+  enterNum,
+  enterOperator,
+  getResult,
+  resetValues,
+} = mainSlice.actions;
 
 export default mainSlice.reducer;

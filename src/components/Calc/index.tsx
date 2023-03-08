@@ -6,7 +6,7 @@ import { AppDispatch } from '../../store/store';
 import { pushBar } from '../../store/mainSlice';
 
 export const Calc = () => {
-  const { calc } = useSelector((state: IState) => state.main);
+  const { calc, runtime } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
 
   const bars = calc.map((barName, i) => (
@@ -34,6 +34,7 @@ export const Calc = () => {
       ref={drop}
       className={
         'calc ' +
+        (runtime ? 'calc_runtime ' : '') +
         (calc.length === 0 ? 'calc_empty ' : '') +
         (isOver && calc.length === 0 ? 'calc_hover' : '')
       }

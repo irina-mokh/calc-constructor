@@ -31,10 +31,10 @@ export const Bar = (bar: BarProps) => {
       children = <Display />;
       break;
     case 'equal':
-      children = <Btn>=</Btn>;
+      children = <Btn type={name}>=</Btn>;
       break;
     default:
-      children = DATA[name].map((val) => <Btn key={val}>{val}</Btn>);
+      children = DATA[name].map((val) => <Btn key={val} type={name}>{val}</Btn>);
       break;
   }
 
@@ -75,7 +75,7 @@ export const Bar = (bar: BarProps) => {
   drag(drop(ref));
 
   const handleDoubleClick = () => {
-    if (!inConstructor) dispatch(removeBar(name));
+    if (!inConstructor && !runtime) dispatch(removeBar(name));
   };
   return (
     <>

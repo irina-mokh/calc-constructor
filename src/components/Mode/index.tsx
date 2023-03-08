@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setRuntime } from '../../store/mainSlice';
+import { resetValues, setRuntime } from '../../store/mainSlice';
 import { AppDispatch } from '../../store/store';
 import { IState } from '../../types';
 
@@ -10,6 +10,7 @@ export const Mode = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setRuntime(e.target.value === 'on'));
+    dispatch(resetValues());
   };
   return (
     <form className="mode">
