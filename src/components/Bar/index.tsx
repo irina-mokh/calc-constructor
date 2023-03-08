@@ -4,15 +4,11 @@ import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dn
 
 import { AppDispatch } from '../../store/store';
 import { moveBar, removeBar } from '../../store/mainSlice';
-import { BarNames, IState } from '../../types';
+import { BarNames, DataType, IState } from '../../types';
 
 import { Btn } from '../Btn';
 import { Display } from '../Display';
 
-
-type DataType = {
-  [key: string]: Array<string>,
-};
 const DATA: DataType = {
   nums: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'],
   operators: ['/', 'x', '-', '+'],
@@ -22,12 +18,16 @@ export type BarProps = {
   name: BarNames,
   order?: number,
 };
+
 export const Bar = (bar: BarProps) => {
   const { calc, runtime } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
+
   const { name }  = bar;
+  // check if this bar has order = is located in constructor section 
   const inConstructor = !Object.keys(bar).includes('order');
   const calcHas = calc.includes(name);
+
   let children: JSX.Element | JSX.Element[] = [];
   switch (name) { 
     case 'display':
@@ -40,7 +40,6 @@ export const Bar = (bar: BarProps) => {
       children = DATA[name].map((val) => <Btn key={val} type={name}>{val}</Btn>);
       break;
   }
-
 
   // eslint-disable-next-line prettier/prettier
   const ref = useRef() as MutableRefObject<HTMLUListElement>;

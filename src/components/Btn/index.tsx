@@ -12,7 +12,10 @@ type BtnProps = {
 export const Btn = ({ children, type }: BtnProps) => {
   const { runtime } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
+
   const value = children;
+
+  //change operation sign for multiply button
   const operation = value === 'x' ? '*' : value;
   const classes = () => {
     const arr = [];
@@ -26,6 +29,7 @@ export const Btn = ({ children, type }: BtnProps) => {
     }
     return arr.join(' ');
   };
+
   const handleClick = () => {
     if (runtime) {
       switch (type) {

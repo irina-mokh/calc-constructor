@@ -6,6 +6,7 @@ import { resetValues } from '../../store/mainSlice';
 import { IState } from '../../types';
 
 const LONG_STR = 17;
+
 export const Display = () => {
   const {
     values: { current, prev, op },
@@ -16,6 +17,7 @@ export const Display = () => {
   let res = String(current);
   const isLong = res.length > 8;
 
+  // check value length & change
   if (isLong && current && res.length > LONG_STR) {
     if (res.includes('.')) {
       const lastChar = Number(res[LONG_STR - 1]);

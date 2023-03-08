@@ -20,3 +20,7 @@ export interface IMainState {
     prevType: string,
   };
 }
+
+export type DataType = {
+  [key: string]: Array<string>,
+};

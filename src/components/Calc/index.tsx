@@ -16,7 +16,8 @@ export const Calc = () => {
       <Bar name={barName} order={i}></Bar>
     </li>
   ));
-  // Drop bar
+
+  // Drop bar to calc section
   const [{ isOver }, drop] = useDrop(() => ({
     accept: 'bar',
     drop: async (drag: BarProps, monitor) => {
@@ -24,7 +25,6 @@ export const Calc = () => {
         return;
       }
       dispatch(pushBar(drag.name));
-      // dispatch(toggleBar(drag.name));
     },
     collect: (monitor: DropTargetMonitor) => ({
       isOver: !!monitor.isOver({ shallow: true }),
