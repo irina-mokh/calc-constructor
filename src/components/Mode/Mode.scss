@@ -3,48 +3,49 @@
 .mode {
 	width: 243px;
 	display: flex;
-	background-color: vars.$light-gray;
 	margin: 0 0 30px auto;
+	background-color: vars.$light-gray;
+	border-radius: 6px;
 
 	&__radio {
 		display: none;
 	}
 
 	&__label {
-		color: vars.$dark-gray;
-		padding: 8px 12px;
-		cursor: pointer;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		padding: 8px 12px;
+		cursor: pointer;
+		color: vars.$dark-gray;
 		background-color: transparent;
 		border: 1px solid transparent;
 		border-radius: 5px;
+
 		.mode__radio:checked+& {
 			border-color: vars.$gray;
 			background-color: vars.$white;
+
 			&::before {
 				background-color: vars.$iris;
 			}
 		}
 			
 		&::before {
-			background-color: vars.$dark-gray;
 			content: '';
 			display: inline-block;
 			width: 20px;
 			height: 20px;
 			margin: 0 8px 0 0;
-
+			background-color: vars.$dark-gray;
 		}
+
 		&_runtime::before {
 			mask-image: url('../../assets/icons/eye.svg');
-
 		}
+
 		&_constructor::before {
 			mask-image: url('../../assets/icons/selector.svg');
-
 		}
-	
 	}
 }

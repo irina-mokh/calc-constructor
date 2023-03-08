@@ -1,11 +1,14 @@
-import { Btn } from '../Btn';
-import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
 import { useRef, MutableRefObject } from 'react';
-import { Display } from '../Display';
 import { useSelector, useDispatch } from 'react-redux';
-import { BarNames, IState } from '../../types';
+import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
+
 import { AppDispatch } from '../../store/store';
 import { moveBar, removeBar } from '../../store/mainSlice';
+import { BarNames, IState } from '../../types';
+
+import { Btn } from '../Btn';
+import { Display } from '../Display';
+
 
 type DataType = {
   [key: string]: Array<string>,

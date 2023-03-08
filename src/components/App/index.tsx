@@ -1,19 +1,21 @@
 import React from 'react';
 import { Calc } from '../Calc';
 import { Constructor } from '../Constructor';
+import { Footer } from '../Footer';
 import { Mode } from '../Mode';
 
 export const App = () => {
   return (
-    <main className="main">
+    <div className="app">
       <h1 className="visually-hidden">Calculator constructor</h1>
-      <div className="container">
+      <main className="app__main">
         <Mode />
-        <div className="app">
+        <div className="app__content">
           <Constructor />
           <Calc />
         </div>
-      </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   );
 };

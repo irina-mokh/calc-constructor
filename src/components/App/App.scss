@@ -1,12 +1,19 @@
-.main {
-  padding-top: 5em;
-  // &__heading {
-  //   text-align: center;
-  //   margin: 20px 0;
-  // }
-}
 .app  {
-  height: 480px;
+  height: 100vh;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  
+  &__content {
+    height: 480px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__main {
+    width: 570px;
+    flex-grow: 1;
+    margin-top: 5em;
+    padding: 0 15px;
+
+  }
 }

@@ -1,6 +1,6 @@
-import { Bar } from '../Bar';
 import { useSelector } from 'react-redux';
 import { IState } from '../../types';
+import { Bar } from '../Bar';
 
 export const Constructor = () => {
   const { runtime } = useSelector((state: IState) => state.main);

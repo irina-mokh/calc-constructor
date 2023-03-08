@@ -1,9 +1,11 @@
 import { useDrop, DropTargetMonitor } from 'react-dnd';
-import { Bar, BarProps } from '../Bar';
 import { useSelector, useDispatch } from 'react-redux';
-import { IState } from '../../types';
+
 import { AppDispatch } from '../../store/store';
 import { pushBar } from '../../store/mainSlice';
+import { IState } from '../../types';
+
+import { Bar, BarProps } from '../Bar';
 
 export const Calc = () => {
   const { calc, runtime } = useSelector((state: IState) => state.main);

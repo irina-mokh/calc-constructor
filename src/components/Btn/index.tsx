@@ -1,5 +1,6 @@
-import { enterNum, enterOperator, getResult } from '../../store/mainSlice';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { enterNum, enterOperator, getResult } from '../../store/mainSlice';
 import { AppDispatch } from '../../store/store';
 import { BarNames, IState } from '../../types';
 

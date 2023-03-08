@@ -2,22 +2,22 @@
 @use '../../styles/mixins';
 
 .bar {
-	gap: 8px;
-  width: 100%;
 	display: flex;
+	gap: 8px;
+	width: 100%;
 	margin-bottom: 12px;
+  padding: 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06), 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   background-color: vars.$white;
-  padding: 4px;
 	opacity: 1;
 	cursor: move;
 	
 	&_nums {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-
 	}
+
 	&_dragging {
 		opacity: 0.7;
 	}
@@ -43,10 +43,10 @@
 		position: absolute;
 		content: '';
 		display: block;
-		background-color: vars.$iris;
 		width: 4px;
 		height: 4px;
 		top: -2px;
+		background-color: vars.$iris;
 		transform: rotate(45deg);
 	}
 	&::before {

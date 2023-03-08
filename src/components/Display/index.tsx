@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { IState } from '../../types';
+
 import { AppDispatch } from '../../store/store';
 import { resetValues } from '../../store/mainSlice';
-import { useEffect } from 'react';
+import { IState } from '../../types';
 
 const LONG_STR = 17;
 export const Display = () => {

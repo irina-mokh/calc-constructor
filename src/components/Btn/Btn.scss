@@ -6,20 +6,21 @@
   display: flex;
 	justify-content: center;
 	align-items: center;
+  line-height: 15px;
+	font-size: 14px;
   border: 1px solid vars.$gray;
   border-radius: 6px;
-  line-height: 15px;
   background-color: transparent;
-	font-size: 14px;
 	cursor: move;
 
 	&_zero {
 		grid-column: span 2;
 	}
+	
 	&_equal {
+		height: 64px;
 		background-color: vars.$iris;
 		color: vars.$white;
-		height: 64px;
 	}
 
 	.constructor .bar[draggable="false"] &{
@@ -28,9 +29,11 @@
 
 	.calc_runtime & {
 		cursor: auto;
+
 		&:hover {
 			box-shadow: 0 0 10px vars.$gray;
 		}
+
 		&:active {
 			border-color: vars.$iris;
 			box-shadow: inset 0 0 0 1px vars.$iris;

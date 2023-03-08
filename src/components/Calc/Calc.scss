@@ -2,17 +2,17 @@
 
 .calc {
 	width: 243px;
-	border: 2px dashed transparent;
-	border-radius: 6px;
 	display: flex;
 	flex-direction: column;
+	border: 2px dashed transparent;
+	border-radius: 6px;
 	
 	&_empty {
 		align-items: center;
-		border-color: vars.$gray-secondary;
-		text-align: center;
 		justify-content: center;
 		padding: 50px;
+		text-align: center;
+		border-color: vars.$gray-secondary;
 	}
 
 	&_hover {
@@ -27,11 +27,13 @@
 .text {
 	font-size: 12px;
 	color: vars.$gray-text;
+
 	&_accent {
+		position: relative;
+		margin: 32px 0 4px 0;
 		font-size: 14px;
 		color: vars.$iris;
-		margin: 32px 0 4px 0;
-		position: relative;
+
 		&::before {
 			position: absolute;
 			content: '';
