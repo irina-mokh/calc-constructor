@@ -1,6 +1,7 @@
 import { useRef, MutableRefObject } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrag, useDrop, DragSourceMonitor, DropTargetMonitor } from 'react-dnd';
+import classNames from 'classnames';
 
 import { AppDispatch } from '../../store/store';
 import { moveBar, removeBar } from '../../store/mainSlice';
@@ -34,10 +35,10 @@ export const Bar = (bar: BarProps) => {
       children = <Display />;
       break;
     case 'equal':
-      children = <Btn type={name}>=</Btn>;
+      children = <Btn type={name} value="="></Btn>;
       break;
     default:
-      children = DATA[name].map((val) => <Btn key={val} type={name}>{val}</Btn>);
+      children = DATA[name].map((val) => <Btn key={val} value={val} type={name}></Btn>);
       break;
   }
 
@@ -76,6 +77,12 @@ export const Bar = (bar: BarProps) => {
   // task Ref
   drag(drop(ref));
 
+  const barClass = classNames({
+    bar: true,
+    'bar_dragging': isDragging,
+    'bar_disabled': !runtime && inConstructor && calcHas,
+  });
+
   const handleDoubleClick = () => {
     if (!inConstructor && !runtime) dispatch(removeBar(name));
   };
@@ -87,7 +94,7 @@ export const Bar = (bar: BarProps) => {
         draggable={ !(runtime || (inConstructor && calcHas))}
         onDoubleClick={handleDoubleClick}
         className={
-          'bar ' + `bar_${name} ` + (isDragging ? 'bar_dragging ' : '') + ( !runtime && inConstructor && calcHas ? 'bar_disabled' : "" )
+          barClass + ` bar_${name} `
         }
       >
         {children}

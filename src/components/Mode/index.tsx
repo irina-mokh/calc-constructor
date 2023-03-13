@@ -14,7 +14,7 @@ export const Mode = () => {
     dispatch(resetValues());
   };
   return (
-    <form className="mode">
+    <div className="mode">
       <input
         type="radio"
         name="runtime"
@@ -39,6 +39,6 @@ export const Mode = () => {
       <label htmlFor="off" className="mode__label  mode__label_constructor">
         Constructor
       </label>
-    </form>
+    </div>
   );
 };

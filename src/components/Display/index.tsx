@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { AppDispatch } from '../../store/store';
 import { resetValues } from '../../store/mainSlice';
@@ -33,12 +34,14 @@ export const Display = () => {
     }
   }, [prev]);
 
+  const displayClass = classNames({
+    display: true,
+    'display_err ': current == Infinity,
+    display_long: isLong,
+  });
+
   return (
-    <div
-      className={
-        'display ' + (current == Infinity ? 'display_err ' : '') + (isLong && 'display_long ')
-      }
-    >
+    <div className={displayClass}>
       <span className="display__memory">{prev && op ? prev + op : ''}</span>
       {runtime && current ? (current === Infinity ? 'Не определено' : res) : 0}
     </div>

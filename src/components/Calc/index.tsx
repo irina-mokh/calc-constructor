@@ -1,5 +1,6 @@
 import { useDrop, DropTargetMonitor } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux';
+import classNames from 'classnames';
 
 import { AppDispatch } from '../../store/store';
 import { pushBar } from '../../store/mainSlice';
@@ -31,16 +32,15 @@ export const Calc = () => {
     }),
   }));
 
+  const calcClass = classNames({
+    calc: true,
+    calc_runtime: runtime,
+    calc_empty: calc.length === 0,
+    calc_hover: isOver && calc.length === 0,
+  });
+
   return (
-    <section
-      ref={drop}
-      className={
-        'calc ' +
-        (runtime ? 'calc_runtime ' : '') +
-        (calc.length === 0 ? 'calc_empty ' : '') +
-        (isOver && calc.length === 0 ? 'calc_hover' : '')
-      }
-    >
+    <section ref={drop} className={calcClass}>
       {calc.length === 0 ? (
         <>
           <p className="text_accent">Перетащите сюда</p>
