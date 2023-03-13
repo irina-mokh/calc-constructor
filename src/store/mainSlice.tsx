@@ -18,7 +18,11 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    pushBar: (state, { payload }) => {
+    pushBarDown: (state, { payload }) => {
+      if (payload === 'display' && state.calc.length > 0) {
+        console.log('display can be only at he top!');
+        return;
+      }
       if (state.calc.includes(payload)) {
         state.calc = state.calc.filter((calcBar) => calcBar !== payload);
       }
@@ -29,12 +33,23 @@ export const mainSlice = createSlice({
     },
     moveBar: (state, { payload }) => {
       const { from, to } = payload;
-      const calc = state.calc;
-      if (from.order) {
-        calc.splice(from.order, 1);
+      if (from.name === 'display' && to.order !== 0) {
+        console.log('display can be only at he top!');
+        return;
       }
+      if (to.name === 'display' && to.order == 0) {
+        console.log('display can be only at he top!');
+        return;
+      }
+      const calc = state.calc;
       calc.splice(to.order, 0, from.name);
-
+      if (from.order >= 0) {
+        if (from.order < to.order) {
+          calc.splice(from.order, 1);
+        } else {
+          calc.splice(from.order + 1, 1);
+        }
+      }
       state.calc = [...calc];
     },
     setRuntime: (state, { payload }) => {
@@ -75,7 +90,7 @@ export const mainSlice = createSlice({
   },
 });
 export const {
-  pushBar,
+  pushBarDown,
   removeBar,
   moveBar,
   setRuntime,

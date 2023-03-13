@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
 import { AppDispatch } from '../../store/store';
-import { pushBar } from '../../store/mainSlice';
+import { pushBarDown } from '../../store/mainSlice';
 import { IState } from '../../types';
 
 import { Bar, BarProps } from '../Bar';
@@ -25,7 +25,7 @@ export const Calc = () => {
       if (monitor.didDrop()) {
         return;
       }
-      dispatch(pushBar(drag.name));
+      dispatch(pushBarDown(drag.name));
     },
     collect: (monitor: DropTargetMonitor) => ({
       isOver: !!monitor.isOver({ shallow: true }),
