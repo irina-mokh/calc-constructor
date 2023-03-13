@@ -39,7 +39,7 @@ export const Display = () => {
         'display ' + (current == Infinity ? 'display_err ' : '') + (isLong && 'display_long ')
       }
     >
-      <span className="display__memory">{prev ? prev + op : ''}</span>
+      <span className="display__memory">{prev && op ? prev + op : ''}</span>
       {runtime && current ? (current === Infinity ? 'Не определено' : res) : 0}
     </div>
   );

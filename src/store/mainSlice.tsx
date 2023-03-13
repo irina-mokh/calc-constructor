@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IMainState } from '../types';
+import { IMainState, ValueType } from '../types';
+import { makeOperation } from '../utils';
 
 export const INITIAL_STORE = {};
 const initialState: IMainState = {
@@ -8,8 +9,8 @@ const initialState: IMainState = {
   values: {
     prev: null,
     current: null,
-    op: '',
-    prevType: '',
+    op: null,
+    prevType: null,
   },
 };
 
@@ -42,30 +43,33 @@ export const mainSlice = createSlice({
     enterNum: ({ values }, { payload }) => {
       const { current, prevType } = values;
       let start = current !== null && current !== Infinity ? current : '';
-      if (prevType === 'operator') {
+      if (prevType === ValueType.OPERATOR) {
         start = '';
       }
-      values.prevType = 'num';
+      values.prevType = ValueType.NUMBER;
       values.current = start + payload;
     },
     enterOperator: ({ values }, { payload }) => {
       const { current, prev, op, prevType } = values;
       values.op = payload;
       values.prev = values.current;
-      if (prevType === 'num' && prev) {
-        values.prev = eval(prev + op + current);
+      values.prevType = ValueType.OPERATOR;
+
+      if (prevType === ValueType.NUMBER && prev && op && current) {
+        values.prev = makeOperation(+prev, op, +current);
       }
-      values.prevType = 'operator';
     },
     getResult: ({ values }) => {
       const { current, prev, op } = values;
-      values.current = eval(prev + op + current);
+      if (current && prev && op) {
+        values.current = makeOperation(+prev, op, +current);
+      }
       values.prev = null;
-      values.op = '';
+      values.op = null;
     },
     resetValues: ({ values }) => {
       values.prev = null;
-      values.op = '';
+      values.op = null;
       values.current = null;
     },
   },

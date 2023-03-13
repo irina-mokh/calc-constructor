@@ -16,11 +16,23 @@ export interface IMainState {
   values: {
     prev: number | null,
     current: number | null,
-    op: string,
-    prevType: string,
+    op: OperatorType | null,
+    prevType: ValueType | null,
   };
 }
 
 export type DataType = {
   [key: string]: Array<string>,
 };
+
+export enum ValueType {
+  NUMBER = 'number',
+  OPERATOR = 'operator',
+}
+
+export enum OperatorType {
+  DIVISION = '/',
+  MULTIPLICATION = '*',
+  SUBTRACTION = '-',
+  ADDITION = '+',
+}
