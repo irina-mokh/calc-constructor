@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import { AppDispatch } from '../../store/store';
 import { resetValues } from '../../store/mainSlice';
 import { IState } from '../../types';
-
-const LONG_STR = 17;
+import { trimValue, MED_STR, LONG_STR } from '../../utils';
 
 export const Display = () => {
   const {
@@ -15,24 +14,14 @@ export const Display = () => {
   } = useSelector((state: IState) => state.main);
   const dispatch: AppDispatch = useDispatch();
 
-  let res = String(current);
-  const isLong = res.length > 8;
-
-  // check value length & change
-  if (isLong && current && res.length > LONG_STR) {
-    if (res.includes('.')) {
-      const lastChar = Number(res[LONG_STR - 1]);
-      const round = Number(res[LONG_STR]);
-      res = res.slice(0, LONG_STR - 1) + String(round >= 5 ? lastChar + 1 : lastChar);
-    } else if (res.length > LONG_STR) {
-      res = res.slice(0, LONG_STR - 1) + '...';
-    }
-  }
   useEffect(() => {
     if (prev === Infinity) {
       dispatch(resetValues());
     }
   }, [prev]);
+
+  const isLong = String(current).length > MED_STR;
+  const isExtraLong = String(current).length > LONG_STR;
 
   const displayClass = classNames({
     display: true,
@@ -40,10 +29,24 @@ export const Display = () => {
     display_long: isLong,
   });
 
+  const compileValue = () => {
+    if (runtime && current) {
+      if (current === Infinity || current === -Infinity) {
+        return 'Не определено';
+      }
+      if (isExtraLong && current) {
+        return trimValue(current);
+      }
+      return current;
+    } else {
+      return 0;
+    }
+  };
+
   return (
     <div className={displayClass}>
       <span className="display__memory">{prev && op ? prev + op : ''}</span>
-      {runtime && current ? (current === Infinity ? 'Не определено' : res) : 0}
+      {compileValue()}
     </div>
   );
 };
