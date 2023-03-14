@@ -62,7 +62,11 @@ export const mainSlice = createSlice({
         start = '';
       }
       values.prevType = ValueType.NUMBER;
-      values.current = start + payload;
+      if (current == -0) {
+        values.current = -payload;
+      } else {
+        values.current = start + payload;
+      }
     },
     enterOperator: ({ values }, { payload }) => {
       const { current, prev, op, prevType } = values;
@@ -72,6 +76,9 @@ export const mainSlice = createSlice({
 
       if (prevType === ValueType.NUMBER && prev && op && current) {
         values.prev = makeOperation(+prev, op, +current);
+      }
+      if (payload === '-' && !current) {
+        values.current = -0;
       }
     },
     getResult: ({ values }) => {
