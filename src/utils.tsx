@@ -20,10 +20,10 @@ export const trimValue = (n: number) => {
   let res = String(n);
   if (n < Math.pow(10, LONG_STR)) {
     const dotI = res.indexOf('.');
-    const rounder = Math.pow(10, res.length - dotI);
+    const rounder = Math.pow(10, res.length - dotI - 2);
     res = String(Math.round(n * rounder) / rounder);
   } else {
-    res = res.slice(0, LONG_STR - 1) + '...';
+    res = res.slice(0, LONG_STR - 2) + '...';
   }
   return res;
 };

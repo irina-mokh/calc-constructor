@@ -58,15 +58,28 @@ export const mainSlice = createSlice({
     enterNum: ({ values }, { payload }) => {
       const { current, prevType } = values;
       let start = current !== null && current !== Infinity ? current : '';
+      // clean current after operator enter
       if (prevType === ValueType.OPERATOR) {
         start = '';
       }
-      values.prevType = ValueType.NUMBER;
-      if (current == -0) {
-        values.current = -payload;
-      } else {
-        values.current = start + payload;
+
+      if (Object.is(current, -0)) {
+        start = '-';
       }
+      if (Object.is(current, 0) || current === null) {
+        start = '';
+      }
+      // handle 0 enter
+      if (payload == 0 && !current) {
+        return;
+      }
+      //paste 0 before dot
+      if (payload === '.') {
+        if (current === 0 || current === null || prevType === ValueType.OPERATOR) start = '0';
+        if (current === -0) start = '-0';
+      }
+      values.current = start + payload;
+      values.prevType = ValueType.NUMBER;
     },
     enterOperator: ({ values }, { payload }) => {
       const { current, prev, prevType } = values;
