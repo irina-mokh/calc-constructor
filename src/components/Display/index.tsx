@@ -30,6 +30,7 @@ export const Display = () => {
   });
 
   const compileValue = () => {
+    console.log(current);
     if (runtime && current) {
       if (current === Infinity || current === -Infinity) {
         return 'Не определено';
@@ -39,6 +40,7 @@ export const Display = () => {
       }
       return current;
     } else {
+      if (current == -0) return '-';
       return 0;
     }
   };
